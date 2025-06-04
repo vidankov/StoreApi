@@ -370,3 +370,4 @@ FodyWeavers.xsd
 /Api/Migrations/20250603101831_Add-Db-Context.cs
 /Api/Migrations/AppDbContextModelSnapshot.cs
 /Api/Migrations/20250603101831_Add-Db-Context.Designer.cs
+/Api/Migrations
