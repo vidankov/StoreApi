@@ -141,7 +141,7 @@ namespace Api.Controllers
 
                         if (productFromDb is null)
                         {
-                            return NotFound(new ResponseServer 
+                            return NotFound(new ResponseServer
                             {
                                 IsSuccess = false,
                                 StatusCode = HttpStatusCode.NotFound,
@@ -164,7 +164,7 @@ namespace Api.Controllers
                         dbContext.Products.Update(productFromDb);
                         await dbContext.SaveChangesAsync();
 
-                        return Ok(new ResponseServer 
+                        return Ok(new ResponseServer
                         {
                             StatusCode = HttpStatusCode.OK,
                             Result = productFromDb
@@ -197,27 +197,7 @@ namespace Api.Controllers
         {
             try
             {
-                if (id <= 0)
-                {
-                    return BadRequest(new ResponseServer 
-                    {
-                        IsSuccess = false,
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorMessages = { "Id должен быть больше нуля." }
-                    });
-                }
-
                 Product? productFromDb = await dbContext.Products.FindAsync(id);
-
-                if (productFromDb is null)
-                {
-                    return NotFound(new ResponseServer
-                    {
-                        IsSuccess = false,
-                        StatusCode = HttpStatusCode.NotFound,
-                        ErrorMessages = { "Продукт по указанному id не найден" }
-                    });
-                }
 
                 dbContext.Products.Remove(productFromDb);
                 await dbContext.SaveChangesAsync();
@@ -228,6 +208,15 @@ namespace Api.Controllers
                     StatusCode = HttpStatusCode.NoContent
                 });
             }
+            catch (ArgumentNullException argumentNullEx)
+            {
+                return NotFound(new ResponseServer
+                {
+                    IsSuccess = false,
+                    StatusCode = HttpStatusCode.NotFound,
+                    ErrorMessages = { "Продукт по указанному id не найден", argumentNullEx.Message}
+                });
+            }
             catch (Exception ex)
             {
                 return BadRequest(new ResponseServer
@@ -235,7 +224,6 @@ namespace Api.Controllers
                     IsSuccess = false,
                     StatusCode = HttpStatusCode.BadRequest,
                     ErrorMessages = { "Что-то пошло не так", ex.Message }
-                    // тест
                 });
             }
         }
