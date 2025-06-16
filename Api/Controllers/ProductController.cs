@@ -191,5 +191,52 @@ namespace Api.Controllers
                 });
             }
         }
+
+        [HttpDelete]
+        public async Task<ActionResult<ResponseServer>> RemoveProductById(int id)
+        {
+            try
+            {
+                if (id <= 0)
+                {
+                    return BadRequest(new ResponseServer 
+                    {
+                        IsSuccess = false,
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorMessages = { "Id должен быть больше нуля." }
+                    });
+                }
+
+                Product? productFromDb = await dbContext.Products.FindAsync(id);
+
+                if (productFromDb is null)
+                {
+                    return NotFound(new ResponseServer
+                    {
+                        IsSuccess = false,
+                        StatusCode = HttpStatusCode.NotFound,
+                        ErrorMessages = { "Продукт по указанному id не найден" }
+                    });
+                }
+
+                dbContext.Products.Remove(productFromDb);
+                await dbContext.SaveChangesAsync();
+
+                return Ok(new ResponseServer
+                {
+                    IsSuccess = true,
+                    StatusCode = HttpStatusCode.NoContent
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseServer
+                {
+                    IsSuccess = false,
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorMessages = { "Что-то пошло не так", ex.Message }
+                });
+            }
+        }
     }
 }
