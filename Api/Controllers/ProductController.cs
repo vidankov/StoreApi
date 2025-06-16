@@ -235,6 +235,7 @@ namespace Api.Controllers
                     IsSuccess = false,
                     StatusCode = HttpStatusCode.BadRequest,
                     ErrorMessages = { "Что-то пошло не так", ex.Message }
+                    // тест
                 });
             }
         }
