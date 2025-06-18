@@ -11,6 +11,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddPostgreSqlDbContext(builder.Configuration);
 builder.Services.AddPostgreSqlIdentityContext();
+builder.Services.AddJwtTokenGenerator();
 
 builder.Services.AddConfigureIdentityOptions();
 
