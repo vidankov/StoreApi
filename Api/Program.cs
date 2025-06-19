@@ -3,17 +3,15 @@ using Api.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 builder.Services.AddPostgreSqlDbContext(builder.Configuration);
 builder.Services.AddPostgreSqlIdentityContext();
 builder.Services.AddJwtTokenGenerator();
-
 builder.Services.AddConfigureIdentityOptions();
+builder.Services.AddAuthenticationConfig(builder.Configuration);
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -26,9 +24,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseAuthorization();
-
 app.MapControllers();
+app.UseCors(o =>
+    o.AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowAnyOrigin()
+    .WithExposedHeaders("*")
+    );
+app.UseAuthentication();
+app.UseAuthorization();
 
 await app.Services.InitializeRoleAsync();
 
