@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Api.Extensions
 {
-    public static class AuthentificationServiceExtension
+    public static class AuthenticationServiceExtension
     {
-        public static IServiceCollection AddAuthentificationConfig(
+        public static IServiceCollection AddAuthenticationConfig(
             this IServiceCollection services,
             IConfiguration configuration)
         {
