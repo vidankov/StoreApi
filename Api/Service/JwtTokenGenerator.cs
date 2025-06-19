@@ -24,7 +24,7 @@ namespace Api.Service
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim("FirstName", appUser.FirstName),
+                    new Claim("UserName", appUser.UserName),
                     new Claim("id", appUser.Id),
                     new Claim(ClaimTypes.Email, appUser.Email),
                     new Claim(ClaimTypes.Role, string.Join(",", roles))
