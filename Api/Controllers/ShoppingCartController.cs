@@ -17,7 +17,7 @@ namespace Api.Controllers
             this.shoppingCartService = shoppingCartService;
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<ActionResult<ResponseServer>> AppendOrUpdateItemInCart(
             string userId, int productId, int updateQuantity)
         {
