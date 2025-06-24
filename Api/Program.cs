@@ -12,6 +12,7 @@ builder.Services.AddJwtTokenGenerator();
 builder.Services.AddConfigureIdentityOptions();
 builder.Services.AddAuthenticationConfig(builder.Configuration);
 builder.Services.AddCors();
+builder.Services.AddShoppingCartService();
 
 var app = builder.Build();
 
