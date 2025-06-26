@@ -2,6 +2,7 @@
 using Api.Data;
 using Api.Model;
 using Api.ModelDto;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Service
 {
@@ -48,6 +49,15 @@ namespace Api.Service
 
             await appDbContext.SaveChangesAsync();
             return order;
+        }
+
+        public async Task<OrderHeader?> GetOrderById(int id)
+        {
+            return await appDbContext
+                .OrderHeaders
+                .Include(items => items.OrderDetailItems)
+                .ThenInclude(x => x.Product)
+                .FirstOrDefaultAsync(u => u.OrderHeaderId == id);
         }
     }
 }
