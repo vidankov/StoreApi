@@ -59,5 +59,23 @@ namespace Api.Service
                 .ThenInclude(x => x.Product)
                 .FirstOrDefaultAsync(u => u.OrderHeaderId == id);
         }
+
+        public async Task<IEnumerable<OrderHeader>> GetOrderByUserIdAsync(string userId)
+        {
+            var querry = appDbContext
+                .OrderHeaders
+                .Include(items => items.OrderDetailItems)
+                .ThenInclude(x => x.Product)
+                .OrderByDescending(u => u.AppUserId);
+
+            if (!string.IsNullOrEmpty(userId))
+            {
+                return await querry
+                    .Where(u => u.AppUserId == userId)
+                    .ToListAsync();
+            }
+
+            return await querry.ToListAsync();
+        }
     }
 }
