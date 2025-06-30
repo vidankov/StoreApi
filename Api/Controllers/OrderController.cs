@@ -67,7 +67,7 @@ namespace Api.Controllers
 
             try
             {
-                var orderHeader = await ordersService.GetOrderById(id);
+                var orderHeader = await ordersService.GetOrderByIdAsync(id);
                 if (orderHeader == null)
                 {
                     return NotFound(new ResponseServer

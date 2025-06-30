@@ -51,7 +51,7 @@ namespace Api.Service
             return order;
         }
 
-        public async Task<OrderHeader?> GetOrderById(int id)
+        public async Task<OrderHeader?> GetOrderByIdAsync(int id)
         {
             return await appDbContext
                 .OrderHeaders
