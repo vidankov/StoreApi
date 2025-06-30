@@ -77,5 +77,35 @@ namespace Api.Service
 
             return await querry.ToListAsync();
         }
+
+        public async Task<bool> UpdateOrderHeaderAsync(int id, OrderHeaderUpdateDto orderHeaderUpdateDto)
+        {
+            if (orderHeaderUpdateDto == null ||
+                orderHeaderUpdateDto.OrderHeaderId != id)
+            {
+                return false;
+            }
+
+            var orderHeader = await appDbContext
+                .OrderHeaders
+                .FirstOrDefaultAsync(oh => oh.OrderHeaderId == id);
+
+            if (orderHeader == null)
+            { 
+                return false;
+            }
+
+            orderHeader.CustomerEmail = string.IsNullOrEmpty(orderHeaderUpdateDto.CustomerEmail)
+                ? orderHeader.CustomerEmail : orderHeaderUpdateDto.CustomerEmail;
+
+            orderHeader.CustomerName = string.IsNullOrEmpty(orderHeaderUpdateDto.CustomerName)
+                ? orderHeader.CustomerName : orderHeaderUpdateDto.CustomerName;
+            
+            orderHeader.Status = string.IsNullOrEmpty(orderHeaderUpdateDto.Status)
+                ? orderHeader.Status : orderHeaderUpdateDto.Status;
+
+            await appDbContext.SaveChangesAsync();
+            return true;
+        }
     }
 }
