@@ -94,5 +94,28 @@ namespace Api.Controllers
                 });
             }
         }
+
+        [HttpGet]
+        public async Task<ActionResult<ResponseServer>> GetOrdersByUserId(string userId)
+        {
+            try
+            {
+                var orderHeaders = await ordersService.GetOrderByUserIdAsync(userId);
+                return Ok(new ResponseServer
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Result = orderHeaders
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ResponseServer
+                {
+                    IsSuccess = false,
+                    StatusCode = HttpStatusCode.InternalServerError,
+                    ErrorMessages = { "При обработке возникла проблема", ex.Message }
+                });
+            }
+        }
     }
 }
