@@ -5,6 +5,6 @@ namespace Api.Service.Payment
 {
     public interface IPaymentService
     {
-        public Task<ActionResult<ResponseServer>> HandlePaymentAsync(string userId, int orderHeaderId, int cardNumber);
+        Task<ActionResult<ResponseServer>> HandlePaymentAsync(string userId, int orderHeaderId, int cardNumber);
     }
 }

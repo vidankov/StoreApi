@@ -14,6 +14,7 @@ builder.Services.AddAuthenticationConfig(builder.Configuration);
 builder.Services.AddCors();
 builder.Services.AddShoppingCartService();
 builder.Services.AddOrdersService();
+builder.Services.AddPaymentService();
 
 var app = builder.Build();
 
