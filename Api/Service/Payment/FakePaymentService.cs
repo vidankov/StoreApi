@@ -1,0 +1,13 @@
+﻿using Api.Model;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Api.Service.Payment
+{
+    public class FakePaymentService : IPaymentService
+    {
+        public Task<ActionResult<ResponseServer>> HandlePaymentAsync(string userId, int orderHeaderId, int cardNumber)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
