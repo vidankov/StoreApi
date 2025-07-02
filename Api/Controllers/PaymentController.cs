@@ -1,9 +1,7 @@
 ﻿using Api.Data;
 using Api.Model;
-using Api.ModelDto;
 using Api.Service.Payment;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Net;
 
 namespace Api.Controllers
@@ -12,11 +10,29 @@ namespace Api.Controllers
     {
         private readonly IPaymentService paymentService;
 
-        public PaymentController(AppDbContext dbContext, IPaymentService paymentService) : base(dbContext)
+        public PaymentController(AppDbContext dbContext,
+            IPaymentService paymentService) : base(dbContext)
         {
             this.paymentService = paymentService;
         }
 
-
+        [HttpPost]
+        public async Task<ActionResult<ResponseServer>> MakePayment(
+            string userId, int orderHeaderId, string cardNumber)
+        {
+            try
+            {
+                return await paymentService.HandlePaymentAsync(userId, orderHeaderId, cardNumber);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseServer
+                {
+                    IsSuccess = false,
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorMessages = { "При обработке платежа произошла ошибка", ex.Message }
+                });
+            }
+        }
     }
 }

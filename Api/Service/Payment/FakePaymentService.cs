@@ -16,7 +16,7 @@ namespace Api.Service.Payment
             this.appDbContext = appDbContext;
         }
 
-        public async Task<ActionResult<ResponseServer>> HandlePaymentAsync(string userId, int orderHeaderId, int cardNumber)
+        public async Task<ActionResult<ResponseServer>> HandlePaymentAsync(string userId, int orderHeaderId, string cardNumber)
         {
             var cartFromDb = await appDbContext
                 .ShoppingCarts
