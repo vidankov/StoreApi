@@ -4,7 +4,6 @@ using Api.ModelDto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Api.Controllers
 {
